@@ -49,6 +49,7 @@ public class Main {
 			}
 			
 			//Wait all threads to finish (infinite)
+			System.out.println("waiting ...");
 			for (Thread t : listThread) {
 				try {
 					t.join();

@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.Date;
 
@@ -32,6 +33,7 @@ public class UdpClient {
 	
 	public boolean contact(){
 		if(address!=null && port>0 && port<65536){
+			
 			String clientTime = ( new Timestamp( (new Date()).getTime() ) ).toString();
 			byte[] sendData = ("Now Time: " + clientTime).getBytes();
 			
@@ -40,11 +42,15 @@ public class UdpClient {
 			byte[] recvData = new byte[BUFFSIZE];
 			DatagramPacket recvPacket = new DatagramPacket(recvData, recvData.length);
 			
+			long timeStart = new Date().getTime();
+			
 			DatagramSocket clientSocket = null;
 			try {
 				clientSocket = new DatagramSocket();
 				
-				clientSocket.setSoTimeout(TIMEOUT);
+				if(TIMEOUT>0){
+					clientSocket.setSoTimeout(TIMEOUT);
+				}
 
 				//send some message to server
 				clientSocket.send(sendPacket);
@@ -54,6 +60,10 @@ public class UdpClient {
 				
 				System.out.println("Received at " + clientTime + "\n" + new String(recvPacket.getData()));
 				
+			} catch (SocketTimeoutException e) {
+				long timeEnd = new Date().getTime();
+				System.out.println("TimeOut:" + (timeEnd-timeStart));
+				return false;
 			} catch (SocketException e) {
 				e.printStackTrace();
 				return false;
@@ -62,6 +72,10 @@ public class UdpClient {
 				return false;
 			}
 			clientSocket.close();
+			
+			long timeEnd = new Date().getTime();
+			
+			System.out.println("Time used:" + (timeEnd-timeStart));
 
 			return true;
 		}else{

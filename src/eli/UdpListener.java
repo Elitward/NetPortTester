@@ -19,7 +19,8 @@ public class UdpListener extends BaseListener{
 		try {
 			socket = new DatagramSocket(port);
 		} catch (SocketException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("ERROR: UDP cannot listen on port " + port);
 		}
 	}
 
@@ -57,6 +58,6 @@ public class UdpListener extends BaseListener{
 
 			}
 		}
-		System.out.println("Loop finish on port " + port);
+		//System.out.println("Loop finish on port " + port);
 	}
 }

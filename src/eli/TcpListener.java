@@ -20,7 +20,8 @@ public class TcpListener extends BaseListener {
 		try {
 			listenSocket = new ServerSocket(port);
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("ERROR: TCP cannot listen on port " + port);
 		}
 	}
 
@@ -52,6 +53,6 @@ public class TcpListener extends BaseListener {
 				}
 			}
 		}
-		System.out.println("Loop finish on port " + port);
+		//System.out.println("Loop finish on port " + port);
 	}
 }
