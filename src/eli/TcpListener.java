@@ -12,9 +12,11 @@ import java.util.Date;
 import com.sun.jmx.snmp.Timestamp;
 
 public class TcpListener extends BaseListener {
+	int port = 0;
 	ServerSocket listenSocket = null;
 	
 	TcpListener(int port){
+		this.port = port;
 		try {
 			listenSocket = new ServerSocket(port);
 		} catch (IOException e) {
@@ -31,7 +33,7 @@ public class TcpListener extends BaseListener {
 					System.out.println("Accept on port " + s.getLocalPort());
 					BufferedReader inFromClient	= new BufferedReader(new InputStreamReader(s.getInputStream()));
 					BufferedWriter outToClient	= new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
-					String serverMessage = "This is TCP message:" + 
+					String serverMessage = "This is TCP Server message:" + 
 							"\r\nLocal Address:  " + s.getLocalAddress().toString() + 
 							"\r\nLocal Port:     " + s.getLocalPort() +
 							"\r\nRemote Address: " + s.getRemoteSocketAddress().toString() +
@@ -43,11 +45,13 @@ public class TcpListener extends BaseListener {
 		            String clientMessage = inFromClient.readLine();
 		            
 		            s.close();
+		            
 		            System.out.println("Tcp socket-" + s.getLocalPort() + " closed. [" + clientMessage + "]");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		}
+		System.out.println("Loop finish on port " + port);
 	}
 }
