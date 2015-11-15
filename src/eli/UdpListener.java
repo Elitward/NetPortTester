@@ -33,7 +33,7 @@ public class UdpListener extends BaseListener{
 				DatagramPacket recvPacket = new DatagramPacket(recvData, recvData.length);
 				try {
 					socket.receive(recvPacket);
-					System.out.println("UDP socket-" + port + " received. [" + new String(recvPacket.getData()) + "]");
+					System.out.println("On UDP Port " + port + " received. [" + new String(recvPacket.getData()) + "]");
 				} catch (IOException e) {
 					e.printStackTrace();
 					continue;

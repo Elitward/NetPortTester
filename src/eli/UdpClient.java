@@ -58,7 +58,7 @@ public class UdpClient {
 				//wait server to replay
 				clientSocket.receive(recvPacket);
 				
-				System.out.println("Received at " + clientTime + "\n" + new String(recvPacket.getData()));
+				System.out.println("Received at " + clientTime + "\n" + new String(recvPacket.getData(), 0, recvPacket.getLength()));
 				
 			} catch (SocketTimeoutException e) {
 				long timeEnd = new Date().getTime();

@@ -47,7 +47,7 @@ public class TcpListener extends BaseListener {
 		            
 		            s.close();
 		            
-		            System.out.println("Tcp socket-" + s.getLocalPort() + " closed. [" + clientMessage + "]");
+		            System.out.println("On TCP Port " + s.getLocalPort() + " closed. [" + clientMessage + "]");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
