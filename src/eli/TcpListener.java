@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Date;
 
 import com.sun.jmx.snmp.Timestamp;
@@ -43,7 +44,12 @@ public class TcpListener extends BaseListener {
 							"\r\n";
 					outToClient.write(serverMessage);
 					outToClient.flush();
-		            String clientMessage = inFromClient.readLine();
+
+					String clientMessage = null;
+					try {
+						clientMessage = inFromClient.readLine();
+					} catch (SocketException e) {
+					}
 		            
 		            s.close();
 		            

@@ -11,11 +11,7 @@ import java.util.Date;
 
 import com.sun.jmx.snmp.Timestamp;
 
-public class UdpClient {
-	InetAddress address = null;
-    int port = 0;
-	final static int BUFFSIZE = 1024*10;
-	final static int TIMEOUT = 1000;
+public class UdpClient extends BaseClient{
 	
 	public UdpClient(String serverStr, int port) {
 		InetAddress address = null;
@@ -30,11 +26,12 @@ public class UdpClient {
 		}
 	}
 	
+	@Override
 	public boolean contact(){
 		if(address!=null && port>0 && port<65536){
 			
 			String clientTime = ( new Timestamp( (new Date()).getTime() ) ).toString();
-			byte[] sendData = ("Now Time: " + clientTime).getBytes();
+			byte[] sendData = ("Client Time: " + clientTime).getBytes();
 			
 			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, address, port);
 
@@ -76,7 +73,7 @@ public class UdpClient {
 			
 			long timeEnd = new Date().getTime();
 			
-			System.out.println("Time used:" + (timeEnd-timeStart));
+			System.out.println("Time used: " + (timeEnd-timeStart) + "ms");
 
 			return true;
 		}else{

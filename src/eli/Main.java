@@ -22,8 +22,8 @@ public class Main {
 				return;
 			}
 			
-			port1  = Integer.parseInt(args[1]);
-			port2  = Integer.parseInt(args[2]);
+			port1 = Integer.parseInt(args[1]);
+			port2 = Integer.parseInt(args[2]);
 			if(port1<=0 || port1>=65536 || port2<=0 || port2>=65536){
 				System.out.println("Port number error!");
 				return;
@@ -71,14 +71,24 @@ public class Main {
 
 			String server = args[1];
 
-			port1  = Integer.parseInt(args[2]);
-			port2  = Integer.parseInt(args[3]);
+			port1 = Integer.parseInt(args[2]);
+			port2 = Integer.parseInt(args[3]);
 			if(port1<=0 || port1>=65536 || port2<=0 || port2>=65536){
 				System.out.println("Port number error!");
 				return;
 			}
 
 			if(bTcp){
+				for(int p=port1; p<=port2; p++){
+					TcpClient tc = new TcpClient(server, p);
+					boolean suc = tc.contact();
+					
+					if(suc){
+						System.out.println("OK: TCP Client connect to " + server + " at port " + p);
+					}else{
+						System.out.println("ERROR: TCP Client connect to " + server + " at port " + p);
+					}
+				}
 			}else{
 				for(int p=port1; p<=port2; p++){
 					UdpClient uc = new UdpClient(server, p);
