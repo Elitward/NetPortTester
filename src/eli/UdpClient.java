@@ -17,14 +17,13 @@ public class UdpClient {
 	final static int BUFFSIZE = 1024*10;
 	final static int TIMEOUT = 1000;
 	
-	public UdpClient(String serverStr, String portStr) {
+	public UdpClient(String serverStr, int port) {
 		InetAddress address = null;
 		try {
 			address = InetAddress.getByName(serverStr);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		int port = Integer.parseInt(portStr);
 		if(address!=null && port>0 && port<65536){
 			this.address = address;
 			this.port = port;
@@ -71,7 +70,9 @@ public class UdpClient {
 				e.printStackTrace();
 				return false;
 			}
-			clientSocket.close();
+			finally {
+				clientSocket.close();
+			}
 			
 			long timeEnd = new Date().getTime();
 			

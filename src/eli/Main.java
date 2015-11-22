@@ -59,9 +59,38 @@ public class Main {
 			}
 			
 			System.out.println("The main thread is going to finish.");
-		}else if(args.length==2){	//UDP client mode
-			UdpClient uc = new UdpClient(args[0], args[1]);
-			uc.contact();
+		}else if(args.length==4){	//client mode
+			if(args[0].compareToIgnoreCase("tcp")==0){
+				bTcp = true;
+			}else if(args[0].compareToIgnoreCase("udp")==0){
+				bTcp = false;
+			}else {
+				System.out.println("Network type error!");
+				return;
+			}
+
+			String server = args[1];
+
+			port1  = Integer.parseInt(args[2]);
+			port2  = Integer.parseInt(args[3]);
+			if(port1<=0 || port1>=65536 || port2<=0 || port2>=65536){
+				System.out.println("Port number error!");
+				return;
+			}
+
+			if(bTcp){
+			}else{
+				for(int p=port1; p<=port2; p++){
+					UdpClient uc = new UdpClient(server, p);
+					boolean suc = uc.contact();
+					
+					if(suc){
+						System.out.println("OK: UDP Client connect to " + server + " at port " + p);
+					}else{
+						System.out.println("ERROR: UDP Client connect to " + server + " at port " + p);
+					}
+				}
+			}
 		}else {
 			System.out.println("Paramter number error!");
 			return;
