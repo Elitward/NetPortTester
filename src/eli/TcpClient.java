@@ -7,11 +7,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ConnectException;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.sql.Timestamp;
 import java.util.Date;
 
-import com.sun.jmx.snmp.Timestamp;
 
 public class TcpClient extends BaseClient{
 	
@@ -41,7 +42,8 @@ public class TcpClient extends BaseClient{
 			BufferedReader inFromServer = null;
 			BufferedWriter outToServer = null;
 			try {
-				clientSocket = new Socket(address, port);
+				clientSocket = new Socket();
+				clientSocket.connect(new InetSocketAddress(address, port), TIMEOUT);
 				inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 				outToServer  = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
 				

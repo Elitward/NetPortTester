@@ -7,9 +7,10 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.sql.Timestamp;
 import java.util.Date;
 
-import com.sun.jmx.snmp.Timestamp;
+
 
 public class UdpClient extends BaseClient{
 	
